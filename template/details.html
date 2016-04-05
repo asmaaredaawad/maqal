@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>	Details Page</title>
+</head>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+<script type="text/javascript" src='{% static "js/jquery-1.11.3.min.js" %}'></script>
+
+<script type="text/javascript" src= '{% static "js/bootstrap.min.js" %}'></script>
+<style type="text/css">
+	.content{
+		display:-webkit-box;
+	}
+	.subject{
+		-webkit-flex: 3;
+		width:70%;
+		
+	}
+	.image{
+		-webkit-flex:1;
+		margin-right:20px;
+		margin-left:60px;
+		
+	}
+	.edit{
+		margin: 30px 0px;
+	}
+</style>
+<body>
+	<div class="container">
+		<h2>separte page</h2>
+		<ul>
+		<br/>
+		<!-- related article -->
+		<!-- related :-
+		
+			
+			{% for tag in articles.tag.all %}
+				{{tag.article_tag}}
+			
+		{%endfor%}	 -->
+		</br>
+		<p  align='center'class="text"><font color='red' size="10"><b> {{article.article_content}}(subject)</b></font><font color='brown' size='3'>NO of Views:{{article.article_views}}</font></p>
+		<div class="content">
+		<div class="subject">
+		<p  align='center'class="text"></br>
+			
+			<b> {{article.article_subject}} </b> <hr/></p>
+				 
+			</div>
+			<div class="image">
+			<!-- <h3>image</h3> -->
+			<img src="{{ article.article_image.url }}" width="300" height="300" class="img-responsive" alt="Responsive image" display= 'block' />
+			</div>
+			</div>
+			<!-- {{ article.article_image.url }} -->
+			</br>
+			<font color='red' size="5"><b> Comments </b></font>
+			
+			{% for comment in comments %}
+				<li>
+
+				<pre>{{ comment.comment_content }}      </pre>
+
+				<!-- Edit Comment -->
+
+				<form  class="form-inline" action='/Blog/{{article.id}}/{{comment.id}}/editcomm' method="post">
+				{% csrf_token %}
+	  			<div class="form-group">
+				    <input type="text" class="form-control" name="comments"  placeholder="Edit Comment">
+			  </div>
+	   			<button type="submit" class="btn btn-default">Edit Comment</button>
+			</form>
+				
+				</li>
+			{%endfor%}
+			
+			</pre>
+
+
+			<!-- Add Comment -->
+				
+			<div class="edit" >
+				<form  class="form-inline" action='/Blog/{{article.id}}/add' method="post">
+				{% csrf_token %}
+	  			<div class="form-group">
+				 <label >Add comment:</label>
+				    <input type="textArea" class="form-control" name="comments"  placeholder="Add Comment">
+			  </div>
+	   			<button type="submit" class="btn btn-default">add</button>
+			</form>
+				</div>
+
+
+
+			<!-- Edit Article -->
+			<form  class="form-inline" action='/Blog/{{article.id}}/editart' method="post">
+				{% csrf_token %}
+				Edit Article
+			   <input type="textArea" class="form-control" name="article"  placeholder="Enter Content you want to edit ">
+
+				<button type="submit" class="btn btn-default">Edit</button>
+			</form>	
+			
+				
+			
+
+		</ul>
+	</div>
+	
+</body>
+</html>

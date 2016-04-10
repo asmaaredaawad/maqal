@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} |  ITI Mansoura {% endblock %}
+{% block extrastyle %}
+<style type="text/css" media="screen">
+	.login #container{
+		border-radius: 5px;
+		background-color:#082431;
+	}
+		#header{
+			border-radius:5px 5px 0px 0px;
+			background-color:#082431;
+			border-bottom:1px solid #447e9b;
+		}
+		#content
+		{
+			
+			background-color:#082431;
+			color:#447e9b;	
+		}
+			div .required{
+				color:red;
+			}
+			#content .required
+			{
+				color:#447e9b;
+			}
+
+			div.breadcrumbs {
+    			background: #447e9b;}
+    		#branding h1, #branding h1 a:link, #branding h1 a:visited{
+    			color: #447e9b;}	
+		#footer{
+			border-radius:0px 0px 5px 5px;
+			background-color:#082431;
+		}
+</style>
+{% endblock %}
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">ITI Mansoura || Django Maqal Proj</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

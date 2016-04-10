@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!-- 
+
+Grill Template 
+
+http://www.templatemo.com/free-website-templates/417-grill
+
+-->
+    <head>
+        {% load staticfiles %}
+        <meta charset="utf-8">
+        <title>Grill Responsive Web Template</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <link ='{% static "http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" %}' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+        <link rel="stylesheet" href="{% static 'css/testimonails-slider.css' %}">
+
+        <script src="{% static 'js/vendor/modernizr-2.6.1-respond-1.1.0.min.js' %}"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+            <header>
+                <div id="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="home-account">
+                                    <a href="/blog/">Home</a>
+                                    {% if user.username%}
+                                         <a href="/blog/profile">My account</a>
+                                    {%else%}
+                                       <a href="/blog/register">Rigster</a>
+                                    {%endif%}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="cart-info">
+                                    {% if user.username%}
+                                     
+                                        <a href="/blog/logout" class="navbar-link" style="">
+                                            {{user.username}}
+                                            <img src="{{ user_image.user_image.url }}" width="45px" height="35px"/>
+                                            
+                                        </a>
+                                    
+                                    {%else%}
+                                    <a href="/blog/login" class="navbar-links">Login</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="logo">
+                                    <a href="#"><img src="{% static 'images/logo.png' %}" title="MAQAL" alt="MAQAL" ></a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-menu">
+                                    <ul>
+                                        <li><a href="/blog/">HOME</a></li>
+                                        
+                                        <li><a href="/blog/articles/">ARTICLES</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <div class="search-box">  
+                                    <form name="search_form" method="get" class="search_form">
+                                        <input id="search" type="text" />
+                                        <input type="submit" id="search-button" />
+                                    </form>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div id="product-post">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>{{article.article_subject}}</h2>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div id="single-blog" class="page-section first-section">
+                        <div class="container">
+                            <div class="row">
+                                <div class="product-item col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-8">  
+                                                <div class="image">
+                                                    <div class="image-post">
+                                                        <img src="{{article.article_image.url}}" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <div class="product-title">
+                                                        <h3>{{article.article_subject}}</h3>
+                                                        <span class="subtitle">{{article.article_comments}} comments</span>
+                                                        <span class="subtitle">{{article.article_views}} Views</span>
+                                                    </div>
+                                                    <p>{{article.article_content}}</p>
+                                                </div>
+                                                <div class="divide-line">
+                                                <img src="{% static 'images/div-line.png' %}" alt="" />
+                                                </div>
+                                                <div class="comments-title">
+                                                    <div class="comment-section">
+                                                        <h4>{{article.article_comments}} comments</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="all-comments">
+                                                {% for comment in comments %}
+                                                    <div class="view-comments">
+                                                        <div class="comments">
+                                                            <div class="author-thumb">
+                                                                <img src="{{ comment.comment_author.oser.user_image.url }}" alt="">
+                                                            </div>
+                                                            <div class="comment-body">
+                                                                <h6>{{ comment.comment_author }}{{ comment.comment_author.oser.user_image.url }}</h6>
+                                                                <span class="date">{{ comment.comment_date }}</span>
+                                                               {% if user == comment.comment_author %}
+                                                               <a href="#" class="hidden-xs"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></a>
+                                                               {% endif %}
+                                                                <p>{{ comment.comment_content }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- {% if request.user == article.article_author %} -->
+                                                    <!-- <form  class="form-inline" action='/blog/{{article.id}}/{{comment.id}}/editcomm' method="post">
+                                                        {% csrf_token %}
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="comments"  placeholder="Edit Comment">
+                                                        </div>
+                                                            <button type="submit" class="btn btn-default">Edit Comment</button>
+                                                    </form> -->
+                                               <!--  {% endif %} -->
+                                                    {% if comment.comment_replay != null%}
+                                                    <div class="replyed-form">
+                                                        <div class="comments replyed">
+                                                            <div class="author-thumb">
+                                                                <img src="{% static  'images/author-comment2.jpg' %}" alt="">
+                                                            </div>
+                                                            <div class="comment-body">
+                                                                <h6>George Tanya</h6>
+                                                                <span class="date">12 Sep 2084 - 8:48 AM</span>
+                                                                <a href="#" class="hidden-xs">Reply</a>
+                                                                <p>In pulvinar venenatis odio. Sed in ex sit amet ipsum posuere mollis. Nam nec risus feugiat dui ultrices dignissim. Morbi ex purus, commodo a tristique eu, mollis a nisi. Pellentesque in enim sit amet tellus ornare fringilla eget eu arcu.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                   {% endfor%} 
+                                                </div>
+                                            {% if user.is_staff == 1 or user.is_superuser == 1   %}
+                                            <div class="leave-comment">
+                                                <div class="leave-one">
+                                                    <h4>Edit Article</h4>
+                                                </div>
+                                            </div>
+                                            <div class="leave-form">
+                                                <form action='/blog/{{article.id}}/editart' method="post" class="leave-comment">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                    <div class="name col-md-4">
+                                                        <input type="text" name="subject" id="name" placeholder="subject" />
+                                                    </div>
+                                                    <div class="email col-md-4">
+                                                        <input type="text" name="description" id="email" placeholder="description" />
+                                                    </div>
+                                                    <div class="subject col-md-4">
+                                                        <span>Published :</span>
+                                                        <input type="checkbox" class="switch-input" name="published">
+                                                    </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="text col-md-12">
+                                                            <textarea  name="article"  placeholder="{{article.article_content}}"></textarea>
+                                                        </div>   
+                                                    </div>                              
+                                                    <div class="send">
+                                                        <button type="submit">Submit Edit</button>
+                                                    </div>
+                                                </form>
+                                                
+                                            </div>     
+                                            {% endif %} 
+                                            <div class="leave-comment">
+                                                <div class="leave-one">
+                                                    <h4>Leave a comment</h4>
+                                                </div>
+                                            </div>
+                                            <div class="leave-form">
+                                                <form action="/blog/{{article.id}}/add_comment" method="post" class="leave-comment">
+                                                    {% csrf_token %}
+                                                    
+                                                    <div class="row">
+
+                                                        <div class="text col-md-12">
+                                                            <textarea  placeholder="Comment" name="comment"></textarea>
+                                                        </div>   
+                                                    </div>                              
+                                                    <div class="send">
+                                                        <button type="submit">Send</button>
+                                                    </div>
+                                                </form>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-md-offset-1">
+                                            <div class="side-bar">
+                                                <div class="news-letters">
+                                                    <h4>Tags</h4>
+                                                    <div class="archives-list">
+                                                        <ul>
+                                                            {% for tag in tags %}
+                                                            <li><a href="#"><i class="fa fa-angle-right"></i>{{tag.tag}}</a></li>
+                                                            {%  endfor %}
+                                                            
+                                                        </ul>
+                                                    </div>        
+                                                </div>
+                                                <div class="recent-post">
+                                                    <h4>Recent Posts</h4>
+                                                    <div class="posts">
+                                                    
+                                                        {% for rec in recent %}
+                                                        <div class="recent-post">
+                                                            <div class="recent-post-thumb">
+                                                                <img src="{{ rec.article_image.url}}" alt="">
+                                                            </div>
+                                                            <div class="recent-post-info">
+                                                                <h6><a href="/{{rec.id}}/add">{{ rec.article_subject}}</a></h6>
+                                                                <span>{{ rec.article_date}}</span>
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div> 
+                                                </div>
+                                                   
+                                            </div>
+                                        </div>     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                </div>
+            </div>
+
+
+			
+            <footer>
+                <div class="container">
+                    <div class="top-footer">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <!-- <div class="subscribe-form">
+                                    <span>Get in touch with us</span>
+                                    <form method="get" class="subscribeForm">
+                                        <input id="subscribe" type="text" />
+                                        <input type="submit" id="submitButton" />
+                                    </form>
+                                </div> -->
+                            </div>
+                            <div class="col-md-3">
+                                <div class="social-bottom">
+                                    <span>Follow us:</span>
+                                    <ul>
+                                        <li><a href="#" class="fa fa-facebook"></a></li>
+                                        <li><a href="#" class="fa fa-twitter"></a></li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="about">
+                                    <h4 class="footer-title">About Maqal</h4>
+                                    <p>Maqal is free magazine by <span class="blue">OS team</span><span class="green"> Team 6</span> and it is a free responsive bootstrap layout that can be applied for any purpose.
+                                    <br><br>Credit goes to <a rel="nofollow" href="http://unsplash.com">Unsplash</a> for photos used in this template. Nam commodo erat quis ligula placerat viverra.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="shop-list">
+                                    <h4 class="footer-title">Latest Tags</h4>
+                                    <ul>
+                                    {% for tag in tags %}
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>{{ tag.tag}}</a></li>
+                                    {% endfor %}    
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="recent-posts">
+                                    <h4 class="footer-title">Recent posts</h4>
+                                    {% for rec in recent %}
+                                    <div class="recent-post">
+                                        <div class="recent-post-thumb">
+                                            <img src="{{ rec.article_image.url}}" alt="">
+                                        </div>
+                                        <div class="recent-post-info">
+                                            <h6><a href="#">{{ rec.article_subject}}</a></h6>
+                                            <span>{{ rec.article_date}}</span>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="more-info">
+                                    <h4 class="footer-title">More info</h4>
+                                    <p>maqal is project using Django technology and python code.</p>
+                                    <ul>
+                                        <li><i class="fa fa-phone"></i>000-000-0000</li>
+                                        <li><i class="fa fa-globe"></i>Mansoura, Dakahlia , Egypt</li>
+                                        <li><i class="fa fa-envelope"></i><a href="#">iti.gov.eg</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-footer">
+                        <p>
+                            <span>Copyright © 2016 <a href="#">Your OS MAnsoura</a> 
+                            | Design: <a rel="nofollow" href="http://www.templatemo.com" target="_parent"><span class="blue">OS.Team 6</span></a></span>
+                        </p>
+                    </div>
+                    
+                </div>
+            </footer>
+
+    
+        <script src="{%static 'js/vendor/jquery-1.11.0.min.js' %}"></script>
+        <script src="{%static 'js/vendor/jquery.gmap3.min.js' %}"></script>
+        <script src="{%static 'js/plugins.js' %}"></script>
+        <script src="{%static 'js/main.js' %}"></script>
+
+    </body>
+</html>

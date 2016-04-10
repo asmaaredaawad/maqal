@@ -53,14 +53,18 @@ def add(request,article_id):
 	article.article_views +=1
 	article.save()
 	
-	article = Article.objects.get(pk=article_id)
+	# related articles
+	related_articles = Article.objects.filter(
+	article_tags__tag__in=list(article.article_tags.values_list('tag', flat=True))
+	).exclude(id=article.id)
+
 	comments = article.comment_set.all()
 	recent=Article.objects.filter(article_published=1).order_by('article_date')[:2];
-	tags=Tag.objects.filter().order_by('id')[:5];
+	tages=Tag.objects.filter().order_by('id')[:5];
 	user_id = request.user.id
 	if user_id:
 		user_image = UserProfile.objects.get(user_id=user_id)
-		context = {'user':request.user,'user_image':user_image,'comments':comments, 'article':article,'recent':recent,'tags':tags}
+		context = {'user':request.user,'user_image':user_image,'comments':comments, 'article':article,'recent':recent,'tags':tages,'related_articles':related_articles}
 	else:
 		context = {'user':request.user,'comments':comments, 'article':article,'recent':recent,'tags':tags}
 	lock = System_status.objects.all()[:1].get()
@@ -87,6 +91,22 @@ def add_comment(request,article_id):
 	if lock.status :
 		return render(request,'blog/locked.html')
 	return render(request,'blog/single.html',context)
+
+def createArticle(request):	
+	if request.method == 'POST':
+		form = ArticleForm(request.POST,request.FILES)
+		title=request.POST.get('article_description')
+		
+		subject=request.POST.get('article_subject')
+		image=request.POST.get('article_image')
+		date =request.POST.get('article_date')
+		new_article= Article(article_description=title,article_subject=subject,article_image=image,article_date=date)
+		new_article.save()
+		return HttpResponse("Aricle added successfully")
+	else:
+		form = ArticleForm()
+	return render(request,'blog/createArticle.html',{"Name":request.user.username,'form': form})
+	
 # def add_comment_replay(request,article_id,comment_id):
 # 	text = request.POST['replay']
 # 	if text is not None and text != '':

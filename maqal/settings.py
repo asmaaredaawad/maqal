@@ -24,14 +24,27 @@ SECRET_KEY = 'fcl46=25&!+l83s%ae(uy@259o9=olc4c3!ekad6k+1bm%y)76'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+if DEBUG:
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = 'asmaaredaawad@gmail.com'
+    SERVER_EMAIL = 'asmaaredaawad@gmail.com'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'asmaaredaawad@gmail.com'
+    EMAIL_HOST_PASSWORD = 'asm0160862942'
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 ALLOWED_HOSTS = []
 
+SESSION_COOKIE_AGE = 3600
+
 
 # Application definition
+COMMENTS_APP = 'my_comment_app'
 
 INSTALLED_APPS = [
     'Blog.apps.BlogConfig',
+    'my_comment_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,8 +54,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
-    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

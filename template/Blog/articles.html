@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!-- 
+
+Grill Template 
+
+http://www.templatemo.com/free-website-templates/417-grill
+
+-->
+    <head>
+        {% load staticfiles %}
+        <meta charset="utf-8">
+        <title>Maqal</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <link ='{% static "http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" %}' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+        <link rel="stylesheet" href="{% static 'css/testimonails-slider.css' %}">
+
+        <script src="{% static 'js/vendor/modernizr-2.6.1-respond-1.1.0.min.js' %}"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+            <header>
+                <div id="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="home-account">
+                                    <a href="/blog/">Home</a>
+                                    {% if user.username%}
+                                         <a href="/blog/profile">My account
+                                    {%else%}
+                                       
+                                    {%endif%}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="cart-info">
+                                    {% if user.username%}
+                                     
+                                        <a href="/blog/logout" class="navbar-link" style="">
+                                            {{user.username}}
+                                            <img src="{{ user.user_image.url }}" width="45px" height="35px"/>
+                                            
+                                        </a>
+                                    
+                                    {%else%}
+                                    <a href="/blog/login" class="navbar-links">Login</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="logo">
+                                    <a href="#"><img src="{% static 'images/logo.png' %}" title="MAQAL" alt="MAQAL" ></a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-menu">
+                                    <ul>
+                                        <li><a href="/blog/">HOME</a></li>
+                                        
+                                        <li><a href="/blog/articles/">ARTICLES</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <div class="search-box">  
+                                    <form name="search_form" method="get" class="search_form">
+                                        <input id="search" type="text" />
+                                        <input type="submit" id="search-button" />
+                                    </form>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+
+            <div id="heading">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-content">
+                                <h2>Aricles</h2>
+                                <span>Home / <a href="/blog/articles">Articles</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div id="products-post">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="product-heading">
+                                <h2>Main Articles</h2>
+                                <img src="{%static 'images/under-heading.png' %}" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="row" id="Container">
+                    {% for  the_article in artic %}
+                        <div class="col-md-3 col-sm-6 mix portfolio-item Pizza">       
+                            <div class="portfolio-wrapper">                
+                                <div class="portfolio-thumb">
+                                    <img src="{%static 'images/product1.jpg' %}" alt="" />
+                                    <div class="hover">
+                                        <div class="hover-iner">
+                                            <a class="fancybox" href="{%static 'images/product1_big.jpg' %}"><img src="{%static 'images/open-icon.png' %}" alt="" /></a>
+                                            <span>Pizza</span>
+                                        </div>
+                                    </div>
+                                </div>  
+                                <div class="label-text">
+                                    <h3><a href="single-post.html">{{the_article.article_subject}}</a></h3>
+                                    <!-- <span class="text-category">$16.00</span> -->
+                                </div>
+                            </div>          
+                        </div>
+                        
+                        {% endfor %}
+                    </div>
+                   
+            </div>
+
+    
+
+			<footer>
+                <div class="container">
+                    <div class="top-footer">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <!-- <div class="subscribe-form">
+                                    <span>Get in touch with us</span>
+                                    <form method="get" class="subscribeForm">
+                                        <input id="subscribe" type="text" />
+                                        <input type="submit" id="submitButton" />
+                                    </form>
+                                </div> -->
+                            </div>
+                            <div class="col-md-3">
+                                <div class="social-bottom">
+                                    <span>Follow us:</span>
+                                    <ul>
+                                        <li><a href="#" class="fa fa-facebook"></a></li>
+                                        <li><a href="#" class="fa fa-twitter"></a></li>
+                                        <li><a href="#" class="fa fa-rss"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="about">
+                                    <h4 class="footer-title">About Maqal</h4>
+                                    <p>Maqal is free magazine by <span class="blue">OS team</span><span class="green"> Team 6</span> and it is a free responsive bootstrap layout that can be applied for any purpose.
+                                    <br><br>Credit goes to <a rel="nofollow" href="http://unsplash.com">Unsplash</a> for photos used in this template. Nam commodo erat quis ligula placerat viverra.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="shop-list">
+                                    <h4 class="footer-title">Latest Tags</h4>
+                                    <ul>
+                                    {% for tag in tags %}
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>{{ tag.tag}}</a></li>
+                                    {% endfor %}    
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="recent-posts">
+                                    <h4 class="footer-title">Recent posts</h4>
+                                    {% for rec in recent %}
+                                    <div class="recent-post">
+                                        <div class="recent-post-thumb">
+                                            <img src="{{ rec.article_image.url}}" alt="">
+                                        </div>
+                                        <div class="recent-post-info">
+                                            <h6><a href="#">{{ rec.article_subject}}</a></h6>
+                                            <span>{{ rec.article_date}}</span>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="more-info">
+                                    <h4 class="footer-title">More info</h4>
+                                    <p>maqal is project using Django technology and python code.</p>
+                                    <ul>
+                                        <li><i class="fa fa-phone"></i>000-000-0000</li>
+                                        <li><i class="fa fa-globe"></i>Mansoura, Dakahlia , Egypt</li>
+                                        <li><i class="fa fa-envelope"></i><a href="#">iti.gov.eg</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-footer">
+                        <p>
+                            <span>Copyright © 2016 <a href="#">Your OS MAnsoura</a> 
+                            | Design: <a rel="nofollow" href="http://www.templatemo.com" target="_parent"><span class="blue">OS.Team 6</span></a></span>
+                        </p>
+                    </div>
+                    
+                </div>
+            </footer>
+
+    
+        <script src="{%static 'js/vendor/jquery-1.11.0.min.js' %}"></script>
+        <script src="{%static 'js/vendor/jquery.gmap3.min.js' %}"></script>
+        <script src="{%static 'js/plugins.js' %}"></script>
+        <script src="{%static 'js/main.js' %}"></script>
+
+    </body>
+</html>

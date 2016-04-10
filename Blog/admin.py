@@ -115,7 +115,7 @@ class CommentPublishedListFilter(admin.SimpleListFilter):
             return queryset.filter(comment_published=False)
 
 class CommentAdmin(admin.ModelAdmin):
-	list_display =['comment_article','comment_published','comment_content','comment_date','comment_last_updated','comment_replay']
+	list_display =['comment_author','comment_article','comment_published','comment_content','comment_date','comment_last_updated','comment_replay']
 	list_filter = (CommentPublishedListFilter,)
 	actions = ['published_comment','unpublished_comment']
 	def published_comment(self, request, queryset):

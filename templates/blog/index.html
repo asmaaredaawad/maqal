@@ -42,6 +42,8 @@ http://www.templatemo.com/free-website-templates/417-grill
                                     <a href="/blog/">Home</a>
                                     {% if user.username%}
                                          <a href="/blog/profile">My account</a>
+                                         <a href="/blog/editProfile">Edit Profile</a>
+                                         <a href="/blog/logout">Log Out</a>
                                     {%else%}
                                        <a href="/blog/register">Rigster</a>
                                     {%endif%}
@@ -52,7 +54,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                                 <div class="cart-info">
                                     {% if user.username%}
                                      
-                                        <a href="/blog/logout" class="navbar-link" style="">
+                                        <a href="/blog/profile" class="navbar-link" style="">
                                             {{user.username}}
                                             <img src="{{ user_image.user_image.url }}" width="45px" height="35px"/>
                                             

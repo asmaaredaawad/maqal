@@ -32,8 +32,7 @@ http://www.templatemo.com/free-website-templates/417-grill
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
-
-            <header>
+ <header>
                 <div id="top-header">
                     <div class="container">
                         <div class="row">
@@ -42,6 +41,8 @@ http://www.templatemo.com/free-website-templates/417-grill
                                     <a href="/blog/">Home</a>
                                     {% if user.username%}
                                          <a href="/blog/profile">My account</a>
+                                         <a href="/blog/editProfile">Edit Profile</a>
+                                         <a href="/blog/logout">Log Out</a>
                                     {%else%}
                                        <a href="/blog/register">Rigster</a>
                                     {%endif%}
@@ -52,7 +53,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                                 <div class="cart-info">
                                     {% if user.username%}
                                      
-                                        <a href="/blog/logout" class="navbar-link" style="">
+                                        <a href="/blog/profile" class="navbar-link" style="">
                                             {{user.username}}
                                             <img src="{{ user_image.user_image.url }}" width="45px" height="35px"/>
                                             
@@ -95,6 +96,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                     </div>
                 </div>
             </header>
+            
             <div id="product-post">
                 <div class="container">
                     <div class="row">
@@ -186,20 +188,21 @@ http://www.templatemo.com/free-website-templates/417-grill
                                                     {% csrf_token %}
                                                     <div class="row">
                                                     <div class="name col-md-4">
-                                                        <input type="text" name="subject" id="name" placeholder="subject" />
+                                                        <input type="text" name="subject" id="name" placeholder="subject" value="{{article.article_subject}}" />
                                                     </div>
                                                     <div class="email col-md-4">
-                                                        <input type="text" name="description" id="email" placeholder="description" />
+                                                        <input type="text" name="description" id="email" placeholder="description"
+                                                        value="{{article.article_description}}" />
                                                     </div>
                                                     <div class="subject col-md-4">
                                                         <span>Published :</span>
-                                                        <input type="checkbox" class="switch-input" name="published">
+                                                        <input type="checkbox" class="switch-input" name="published" >
                                                     </div>
                                                     </div>
                                                     <div class="row">
 
                                                         <div class="text col-md-12">
-                                                            <textarea  name="article"  placeholder="{{article.article_content}}"></textarea>
+                                                            <textarea  name="article"  placeholder="{{article.article_content}}">{{article.article_content}}</textarea>
                                                         </div>   
                                                     </div>                              
                                                     <div class="send">

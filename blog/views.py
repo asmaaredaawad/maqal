@@ -5,6 +5,7 @@ from django.core.context_processors import csrf
 from django.contrib.sessions.models import Session
 from django.conf import settings
 from django.contrib.auth.signals import user_logged_in
+from .forms import *
 from .models import *
 
 
@@ -150,6 +151,73 @@ def editcomm(request,comment_id,article_id):
 		return render(request,'blog/locked.html')
 	return render(request,'blog/details.html',context)
 
+# user actions
+def register(request):
+	lock = System_status.objects.all()[:1].get()
+	if lock.status :
+		return render(request,'blog/locked.html')
+
+	registered = False
+	if request.method == 'POST':
+		user_form = UserForm(request.POST)
+		user_profile_form = UserProfileForm(request.POST)
+
+		if request.POST['password'] != request.POST['confirm_password']:
+			return render(request,'blog/register.html',
+	        {'user_form': user_form, 'user_profile_form': user_profile_form, 'registered': registered})
+		if user_form.is_valid() and user_profile_form.is_valid():
+			user = user_form.save()
+			user.set_password(user.password)
+			user.save()
+			custom_user = user_profile_form.save(commit=False)
+			custom_user.user = user
+			if 'image' in request.FILES:
+				custom_user.user_image = request.FILES['image']
+			custom_user.save()
+
+			registered = True
+			return render_to_response('blog/login.html')
+
+			# send_mail("welcome", "Welcome To our Blog ", settings.DEFAULT_FROM_EMAIL, [self.user.email])
+
+		else:
+			user_form.errors, user_profile_form.errors
+
+	else:
+		user_form = UserForm()
+		user_profile_form = UserProfileForm()
+
+	return render(request,'blog/register.html',
+	        {'user_form': user_form, 'user_profile_form': user_profile_form, 'registered': registered})
+
+def editProfile(request):
+	if request.user:
+		updated = False
+		if request.method == 'POST':
+			user_form = UserForm(request.POST)
+			user_profile_form = UserProfileForm(request.POST)
+			if user_form.is_valid() and user_profile_form.is_valid():
+				user = user_form.save()
+				user.set_password(user.password)
+				user.save()
+				custom_user = user_profile_form.save(commit=False)
+				custom_user.user = user
+				if 'image' in request.FILES:
+					custom_user.user_image = request.FILES['image']
+				custom_user.save()
+
+				updated = True
+
+			else:
+				user_form.errors, user_profile_form.errors
+
+		else:
+			user_form = UserForm()
+			user_profile_form = UserProfileForm()
+		context = {'user_form': user_form, 'user_profile_form': user_profile_form, 'updated': updated,'user':request.user}	
+		return render(request,'blog/edit-profile.html',context)
+	else:
+		return HttpResponseRedirect('blog/index.html')
 def login(request):
 	if request.COOKIES.get("sessionid",None):
 		return HttpResponseRedirect('/blog/index')

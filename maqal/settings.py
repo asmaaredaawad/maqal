@@ -10,7 +10,9 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.utils.module_loading import import_module
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,6 +39,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+
+    'captcha',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -109,6 +119,46 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
 
+AUTHENTICATION_BACKENDS = (
+        # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',)
+
+LOGIN_REDIRECT_URL = 'http://localhost:8000/blog'
+
+SOCIALACCOUNT_PROVIDERS = {
+ 'facebook': {
+            'SCOPE': ['email', 'user_friends','public_profile'],
+            'AUTH_PARAMS': { 'auth_type': 'reauthenticate' },
+            'METHOD': 'oauth2'  # instead of 'oauth2'
+ }
+}
+
+
+ACCOUNT_LOGOUT_REDIRECT_URL = '/blog'
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+ACCOUNT_EMAIL_VERIFICATION = False
+
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1575354262784400'
+SOCIAL_AUTH_FACEBOOK_SECRET = '5f9bc3cc336c1ac4086562c92aff4ad6'
+
+# LOGIN_REDIRECT_URL = 'https://www.facebook.com'
+
+SITE_ID = 2
+
+RECAPTCHA_PUBLIC_KEY = '6LdkCh0TAAAAAGbo20CZOdHE5RB4U_inTgOkOAAo'
+
+RECAPTCHA_PRIVATE_KEY = '6LdkCh0TAAAAAEk1DFeEhsfl0DbU3rJxhtGd-dlR'
+
+RECAPTCHA_USE_SSL = True
+
+RECAPTCHA_PROXY = 'http://127.0.0.1:8000'
+    
 
 
 #######################################################3333333

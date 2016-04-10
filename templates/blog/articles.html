@@ -32,8 +32,7 @@ http://www.templatemo.com/free-website-templates/417-grill
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
-
-            <header>
+ <header>
                 <div id="top-header">
                     <div class="container">
                         <div class="row">
@@ -42,6 +41,8 @@ http://www.templatemo.com/free-website-templates/417-grill
                                     <a href="/blog/">Home</a>
                                     {% if user.username%}
                                          <a href="/blog/profile">My account</a>
+                                         <a href="/blog/editProfile">Edit Profile</a>
+                                         <a href="/blog/logout">Log Out</a>
                                     {%else%}
                                        <a href="/blog/register">Rigster</a>
                                     {%endif%}
@@ -52,9 +53,9 @@ http://www.templatemo.com/free-website-templates/417-grill
                                 <div class="cart-info">
                                     {% if user.username%}
                                      
-                                        <a href="/blog/logout" class="navbar-link" style="">
+                                        <a href="/blog/profile" class="navbar-link" style="">
                                             {{user.username}}
-                                            <img src="{{user_image.user_image.url }}" width="45px" height="35px"/>
+                                            <img src="{{ user_image.user_image.url }}" width="45px" height="35px"/>
                                             
                                         </a>
                                     
@@ -95,14 +96,13 @@ http://www.templatemo.com/free-website-templates/417-grill
                     </div>
                 </div>
             </header>
-
-
+            
             <div id="heading">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="heading-content">
-                                <h2>Aricles</h2>
+                                <h2>Articles</h2>
                                 <span>Home / <a href="/blog/articles">Articles</a></span>
                             </div>
                         </div>

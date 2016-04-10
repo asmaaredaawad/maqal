@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^maqal/',include('blog.urls')),
     url(r'^',include('blog.urls')),
     url(r'^blog/',include('blog.urls')),
+    url(r'^accounts/', include('allauth.urls')),
 
 
 ]

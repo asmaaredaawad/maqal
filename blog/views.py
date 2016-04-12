@@ -96,17 +96,17 @@ def createArticle(request):
 	if request.method == 'POST':
 		form = ArticleForm(request.POST,request.FILES)
 		title=request.POST.get('article_description')
-		
+		user_id=request.user
 		subject=request.POST.get('article_subject')
 		image=request.POST.get('article_image')
 		date =request.POST.get('article_date')
-		new_article= Article(article_description=title,article_subject=subject,article_image=image,article_date=date)
+		new_article= Article(article_description=title,article_subject=subject,article_image=image,article_date=date,article_author=user_id)
 		new_article.save()
-		return HttpResponse("Aricle added successfully")
+		return HttpResponseRedirect('/blog')
 	else:
 		form = ArticleForm()
 	return render(request,'blog/createArticle.html',{"Name":request.user.username,'form': form})
-	
+
 # def add_comment_replay(request,article_id,comment_id):
 # 	text = request.POST['replay']
 # 	if text is not None and text != '':
@@ -238,6 +238,28 @@ def editProfile(request):
 		return render(request,'blog/edit-profile.html',context)
 	else:
 		return HttpResponseRedirect('blog/index.html')
+
+def profile(request):
+	edit = False
+	if request.method == 'POST':
+		user_form = UserForm(request.POST)
+		user_profile_form = UserProfileForm(request.POST)
+		if user_form.is_valid() and user_profile_form.is_valid():
+			user = user_form.save()
+			user.set_password(user.password)
+			user.save()
+			custom_user = user_profile_form.save(commit=False)
+			custom_user.user = user
+			if 'image' in request.FILES:
+				custom_user.user_image = request.FILES['image']
+			custom_user.save()
+			edit =True
+	else :
+		user=request.user
+		render(request,'blog/profile.html',{'user':user,'edit':edit} )
+
+
+
 def login(request):
 	if request.COOKIES.get("sessionid",None):
 		return HttpResponseRedirect('/blog/index')
